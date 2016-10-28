@@ -1,0 +1,24 @@
+<h1>Edit Your Password</h1>
+
+<%#= @password.errors.full_messages.join(", ") %>
+<%= form_for @user, url: password_path(@user) do |u| %>
+  <br>
+  <div>
+    <%= u.label :current_password%>
+    <%= u.password_field :current_password%>
+  </div>
+  <br>
+  <div>
+    <%= u.label :password%>
+    <%= u.password_field :password%>
+  </div>
+  <br>
+  <div>
+    <%= u.label :password_confirmation%>
+    <%= u.password_field :password_confirmation%>
+  </div>
+  <br>
+  <div>
+    <%= u.submit %>
+  </div>
+  <%end%>

@@ -1,0 +1,6 @@
+<h1>See Your favourite posts</h1>
+
+<% @likes.each do |l|%>
+  <h2><%= link_to l.post.title, post_path(l.post_id) %></h2>
+  <hr>
+<%end%>

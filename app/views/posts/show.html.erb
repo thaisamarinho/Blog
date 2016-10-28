@@ -1,0 +1,49 @@
+<h1><%= @post.title %></h1>
+<p><%= @post.body %></p>
+<%if @category%>
+  <p><%= @category.title %></p>
+<%end%>
+
+<p>Created by: <%= @post.user_full_name %></p>
+<% if can? :manage, @post %>
+<%= link_to "Edit", edit_post_path(@post)%>
+<%= link_to "Delete", post_path(@post),
+                      method: :delete,
+                      data: {confirm: 'Are you sure you want to delete this post?'}%>
+<% end %>
+<% if user_signed_in? && can?(:like, @post)%>
+  <% if @like.present?%>
+      <%= link_to "Unlike", post_like_path(@post, @like), method: :delete %>
+  <%else%>
+    <%= link_to "Like", post_likes_path(@post), method: :post %>
+  <%end%>
+<%end%>
+
+<%= pluralize(@post.likes.count, "Like") %>
+
+<br>
+<br>
+<%= @comment.errors.full_messages.join(', ')%>
+<%= form_for [@post, @comment] do |f| %>
+  <div>
+    <%= f.label :comments%>
+    <%= f.text_area :body%>
+  </div>
+  <br>
+  <div>
+  <%= f.submit%>
+  </div>
+<% end %>
+<br>
+<%if @post.comments.size != 0 %>
+<h2>Comments</h2>
+    <% @post.comments.each do |comment| %>
+      <%= comment.body %>
+      <br>
+      <% if (can? :manage, @post) || (can? :delete, comment) %>
+
+      <%= link_to 'delete', post_comment_path(@post, comment), method: :delete, data: { confirm: 'Are you sure?'} %>
+      <%end%>
+      <hr>
+    <%end%>
+<%end%>

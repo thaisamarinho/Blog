@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blog</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <style>
+    nav {
+      float: right;
+      padding: 10px;
+      background-color: lightblue;
+      width: 100%;
+    }
+    #nav-bar {
+      float: right;
+    }
+    </style>
+    <nav>
+      <div class="nav-bar">
+        <% if user_signed_in? %>
+        Hello <%= link_to current_user.first_name.titleize, edit_user_path(current_user) %>
+        |
+        <%= link_to 'Favourite Posts', user_likes_path(current_user) %>
+        |
+        <%= link_to 'Sign Out', sessions_path, method: :delete%>
+        |
+        <%= link_to 'Update Your Password', edit_password_path(current_user) %>
+        <% else %>
+        <%= link_to 'Sign up', new_user_path %>
+        |
+        <%= link_to 'Sign in', new_session_path %>
+
+        <%end%>
+        <span id="nav-bar">
+        <%= link_to 'Home', home_path %>
+        |
+        <%= link_to 'About', about_path %>
+        |
+        <%= link_to 'New Posts', new_post_path %>
+        |
+        <%= link_to 'All Posts', posts_path %>
+      </span>
+    </div>
+    </nav>
+    </head>
+
+    <body class="container">
+    <br>
+    <hr>
+    <br>
+    <%= notice || alert %>
+    <%= yield %>
+  </body>
+</html>

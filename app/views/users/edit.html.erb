@@ -1,0 +1,29 @@
+<h1>Edit User Info</h1>
+
+<%= @user.errors.full_messages.join(", ") %>
+<%= form_for @user do |u| %>
+  <div>
+    <%= u.label :first_name%>
+    <%= u.text_field :first_name%>
+  </div>
+  <br>
+  <div>
+    <%= u.label :last_name%>
+    <%= u.text_field :last_name%>
+  </div>
+  <br>
+  <div>
+    <%= u.label :email%>
+    <%= u.email_field :email%>
+  </div>
+  <br>
+  <div>
+    <%= u.label :password%>
+    <%= u.password_field :password%>
+  </div>
+  <br>
+  <br>
+  <div>
+    <%= u.submit %>
+  </div>
+  <%end%>

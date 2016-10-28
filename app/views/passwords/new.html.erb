@@ -1,0 +1,13 @@
+<h1>Forgot your password?</h1>
+<h2>Please fill up your email and you will receive a link to change it.</h2>
+
+<%= form_tag link_passwords_path do %>
+  <div>
+    <%= label_tag :email%>
+    <%= text_field_tag :email%>
+  </div>
+
+  <div>
+    <%= submit_tag 'Get your token' %>
+  </div>
+<% end %>
