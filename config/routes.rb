@@ -6,20 +6,18 @@ Rails.application.routes.draw do
   get "/about" => "home#about"
 
   resources :users, only: [:new, :create, :edit, :update] do
-    resources :likes, only: [:index]
+    resources :favourites, only: [:index]
   end
-  resources :passwords, only: [:update, :new, :edit] do
-    post :link, on: :collection
-    get :forgot_password, on: :collection
-    patch :update_password, on: :collection
-  end
+
+  resources :passwords, only: [:edit, :update]
   resources :sessions, only: [:new, :create] do
     delete :destroy, on: :collection
   end
 
   resources :posts do
+    resources :favourites, only: [:create, :destroy]
     resources :comments
-    resources :likes, only: [:create, :destroy]
+    resources :stars, shallow: true, only: [:create, :update, :destroy]
   end
 
 

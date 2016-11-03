@@ -1,8 +1,8 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_user, except: [:index, :show]
 
   def new
-    @comment = Comment.new
+    @comment = comment.new
   end
 
   def create
@@ -18,15 +18,15 @@ class CommentsController < ApplicationController
   end
 
   def show
-    @comment = Comment.find params[:id]
+    @comment = comment.find params[:id]
   end
 
   def index
-    @comments = Comment.order(created_at: :desc)
+    @comments = comment.order(created_at: :desc)
   end
 
   def edit
-    @comment = Comment.find params[:id]
+    @comment = comment.find params[:id]
   end
 
   def update
@@ -42,10 +42,8 @@ class CommentsController < ApplicationController
   def destroy
     post = Post.find params[:post_id]
     comment = Comment.find params[:id]
-    if can? :delete, comment
-      comment.destroy
-      redirect_to post_path(post)
-    end
+    comment.destroy
+    redirect_to post_path(post)
   end
 
   def comment_params

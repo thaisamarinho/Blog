@@ -22,6 +22,14 @@ class Ability
          user != p.user
        end
 
+       cannot :favourite, Post do |p|
+         p.user == user
+       end
+
+       can :favourite, Post do |p|
+         user != p.user
+       end
+
       if user.admin?
         can :manage, :all
       else

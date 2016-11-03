@@ -15,5 +15,12 @@
     <%=f.label :category %>
     <%= f.collection_select :category_id, Category.all, :id, :title%>
   </div>
+
+  <div>
+    <%= f.collection_check_boxes(
+    :tag_ids, Tag.all, :id, :name
+    ) %>
+  </div>
+
   <%= f.submit %>
 <% end %>

@@ -5,9 +5,6 @@ class User < ApplicationRecord
 
   before_validation :downcase_email
 
-  has_many :likes, dependent: :destroy
-  has_many :liked_posts, through: :likes, source: :post
-
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
   validates :first_name, presence: true
@@ -15,14 +12,16 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: {case_sensitive: false}, format: VALID_EMAIL_REGEX
 
-  # validates :password, presence: true
+  validates :password, presence: true
 
   has_many :posts, dependent: :nullify
   has_many :comments, dependent: :nullify
 
-  def full_name
-    "#{first_name} #{last_name}".strip.squeeze(" ").titleize
-  end
+  has_many :stats, dependent: :destroy
+  has_many :starred_posts, through: :stars, source: :post
+
+  has_many :favourites, dependent: :destroy
+  has_many :favourited_posts, through: :favourites, source: :post
 
   private
 

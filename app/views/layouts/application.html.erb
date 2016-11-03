@@ -17,23 +17,12 @@
       float: right;
     }
     </style>
-    <nav>
-      <div class="nav-bar">
-        <% if user_signed_in? %>
-        Hello <%= link_to current_user.first_name.titleize, edit_user_path(current_user) %>
-        |
-        <%= link_to 'Favourite Posts', user_likes_path(current_user) %>
-        |
-        <%= link_to 'Sign Out', sessions_path, method: :delete%>
-        |
-        <%= link_to 'Update Your Password', edit_password_path(current_user) %>
-        <% else %>
-        <%= link_to 'Sign up', new_user_path %>
-        |
-        <%= link_to 'Sign in', new_session_path %>
+    </head>
 
-        <%end%>
-        <span id="nav-bar">
+    <body class="container">
+    <nav>
+      <div id="nav-bar">
+
         <%= link_to 'Home', home_path %>
         |
         <%= link_to 'About', about_path %>
@@ -41,15 +30,24 @@
         <%= link_to 'New Posts', new_post_path %>
         |
         <%= link_to 'All Posts', posts_path %>
-      </span>
-    </div>
+        |
+        <% if user_signed_in? %>
+          Hello <%= link_to current_user.first_name.titleize, edit_user_path(current_user) %>
+          <%= link_to 'Sign Out', sessions_path, method: :delete%>
+          |
+          <%= link_to 'Update Your Password', edit_password_path(current_user) %>
+          |
+          <%= link_to 'Your Favourite Posts', user_favourites_path(current_user) %>
+        <% else %>
+          <%= link_to 'Sign up', new_user_path %>
+          |
+          <%= link_to 'Sign in', new_session_path %>
+        <%end%>
+      </div>
     </nav>
-    </head>
-
-    <body class="container">
+    <br>
     <br>
     <hr>
-    <br>
     <%= notice || alert %>
     <%= yield %>
   </body>
