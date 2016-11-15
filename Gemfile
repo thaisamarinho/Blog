@@ -55,6 +55,7 @@ group :development do
   gem 'rspec-rails'
 end
 gem 'cancancan'
+gem 'rack-cors'
 gem "font-awesome-rails"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

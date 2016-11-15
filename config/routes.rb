@@ -9,8 +9,12 @@ Rails.application.routes.draw do
     resources :favourites, only: [:index]
   end
 
-  resources :passwords, only: [:edit, :update]
-  resources :sessions, only: [:new, :create] do
+  resources :passwords, only: [:edit, :update, :new] do
+    post :link, on: :collection
+    get :forgot_password, on: :collection
+    patch :update_password, on: :collection
+  end
+  resources :sessions, only: [:new, :create, :update] do
     delete :destroy, on: :collection
   end
 

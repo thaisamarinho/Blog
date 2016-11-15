@@ -1,0 +1,13 @@
+<%# @post = post if post %>
+<% if user_signed_in? && can?(:favourite, @post)%>
+  <%@favourite = @post.favourites.find_by(user: current_user) %>
+  <% if @favourite&.persisted? %>
+    <%= link_to "Unfavourite", post_favourite_path(@post, @favourite),  remote: true, method: :delete %>
+    <%else%>
+      <%= link_to "Favourite", post_favourites_path(@post), remote: true, method: :post %>
+  <%end%>
+<%end%>
+
+<div>
+  <%= pluralize(@post.favourites.count, "Favourite")%>
+</div>

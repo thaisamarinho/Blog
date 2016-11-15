@@ -12,11 +12,6 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: {case_sensitive: false}, format: VALID_EMAIL_REGEX
 
-  validates :password, presence: true
-
-  has_many :posts, dependent: :nullify
-  has_many :comments, dependent: :nullify
-
   has_many :stats, dependent: :destroy
   has_many :starred_posts, through: :stars, source: :post
 

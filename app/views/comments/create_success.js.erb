@@ -1,0 +1,4 @@
+$('#comments-loop').prepend('<%= j render "comment", comment: @comment %>');
+
+<% @comment = Comment.new %>
+$('#com-form').html('<%= j render "form" %>');

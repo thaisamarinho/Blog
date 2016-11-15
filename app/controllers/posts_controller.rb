@@ -20,10 +20,24 @@ class PostsController < ApplicationController
     if @post.category_id != nil
       @category = Category.find @post.category_id
     end
+
+    respond_to do |format|
+      format.html {render}
+      format.text {render}
+      format.xml {render xml: @post}
+      format.json {render json: @post.to_json(include: :comments)}
+    end
+
   end
 
   def index
     @posts = Post.order(created_at: :desc)
+    respond_to do |format|
+      format.html {render}
+      format.text {render}
+      format.xml {render xml: @posts}
+      format.json {render json: @posts.to_json}
+    end
   end
 
   def edit

@@ -1,64 +1,49 @@
-<h1><%= @post.title %></h1>
-<p><%= @post.body %></p>
-<%if @category%>
-  <p><%= @category.title %></p>
-<%end%>
-
-<section class="star-widget">
-  Post Average Rating: <%= average_star(@post) %>
-</section>
-
-<% if can? :manage, @post %>
-  <%= link_to "Edit", edit_post_path(@post)%>
-  <%= link_to "Delete", post_path(@post),
-                        method: :delete,
-                        data: {confirm: 'Are you sure you want to delete this post?'}%>
-<%end%>
-<br>
-<br>
-<% if user_signed_in? && can?(:favourite, @post)%>
-  <%favourite = @post.favourites.find_by(user: current_user) %>
-  <% if favourite.present? %>
-  <br>
-    <%= link_to "Unfavourite", post_favourite_path(@post, favourite), method: :delete %>
-    <%else%>
-      <%= link_to "Favourite", post_favourites_path(@post), method: :post %>
-  <%end%>
-<%end%>
-<%= pluralize(@post.favourites.count, "Favourite") %>
-<br>
-<br>
-<section>
-  Tags: <%= @post.tags.map(&:name).join(", ") %>
-</section>
-<br>
-<section class="star-widget">
-  Rate this Post:
-  <%= display_star(@post) %>
-</section>
-<br>
-<%= @comment.errors.full_messages.join(', ')%>
-<%= form_for [@post, @comment] do |f| %>
-  <div>
-    <%= f.label :body%>
-    <%= f.text_area :body%>
-  </div>
-  <br>
-  <div>
-  <%= f.submit%>
-  </div>
-<% end %>
-<br>
-<%if @post.comments.size != 0 %>
-<h2>Comments</h2>
-    <% @post.comments.each do |comment| %>
-      <%= comment.body %>
-      <br>
-      <% if user_signed_in? && can?(:delete, comment)%>
-        <%= link_to 'delete', post_comment_path(@post, comment), method: :delete, data: { confirm: 'Are you sure?'} %>
-
-        <br>
-      <hr>
+<div id="<%= dom_id(@post)%>">
+  <div class="row">
+    <div class="col-xs-10 col-sm-11 question-show">
+      <h1><%= @post.title %></h1>
+      <p><%= @post.body %></p>
+      <%if @category%>
+        <p><%= @category.title %></p>
       <%end%>
+
+      <section class="star-widget">
+        Post Average Rating: <%= average_star(@post) %>
+      </section>
+
+      <% if can? :manage, @post %>
+        <%= link_to "Edit", edit_post_path(@post)%>
+        <%= link_to "Delete", post_path(@post),
+                              method: :delete,
+                              data: {confirm: 'Are you sure you want to delete this post?'}%>
+      <%end%><br>
+
+      <div>
+        <div id="fav-form">
+            <%= render '/favourites/form', post: @post %>
+        </div>
+      </div><br>
+
+
+      <section>
+        Tags: <%= @post.tags.map(&:name).join(", ") %>
+      </section><br>
+
+      <section class="star-widget">
+        Rate this Post:
+        <%= display_star(@post) %>
+      </section><br>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div id="com-form">
+    <%= render '/comments/form' %>
+  </div><br><br><br><br>
+  <div id='comments-loop'>
+    <% @post.comments.each do |comment| %>
+      <%= render('comments/comment', {comment: comment}) %>
     <%end%>
-<%end%>
+  </div>
+</div>

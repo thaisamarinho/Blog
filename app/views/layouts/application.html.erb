@@ -6,23 +6,10 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <style>
-    nav {
-      float: right;
-      padding: 10px;
-      background-color: lightpink;
-      width: 100%;
-    }
-    #nav-bar {
-      float: right;
-    }
-    </style>
     </head>
 
     <body class="container">
-    <nav>
-      <div id="nav-bar">
-
+    <nav class="navbar navbar-default vertical-center">
         <%= link_to 'Home', home_path %>
         |
         <%= link_to 'About', about_path %>
@@ -30,25 +17,39 @@
         <%= link_to 'New Posts', new_post_path %>
         |
         <%= link_to 'All Posts', posts_path %>
-        |
+
         <% if user_signed_in? %>
+        <div class="pull-right">
           Hello <%= link_to current_user.first_name.titleize, edit_user_path(current_user) %>
+          |
           <%= link_to 'Sign Out', sessions_path, method: :delete%>
           |
           <%= link_to 'Update Your Password', edit_password_path(current_user) %>
           |
           <%= link_to 'Your Favourite Posts', user_favourites_path(current_user) %>
+        </div>
         <% else %>
           <%= link_to 'Sign up', new_user_path %>
           |
           <%= link_to 'Sign in', new_session_path %>
         <%end%>
-      </div>
     </nav>
+    <% if notice || alert %>
+       <div class="alert alert-<%= notice ? 'success' : 'danger'%> alert-dismissable" role="alert">
+         <%= notice || alert %>
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <% end %>
     <br>
     <br>
-    <hr>
-    <%= notice || alert %>
-    <%= yield %>
+    <div class="row">
+      <div class="col-md-12 center">
+        <%= csrf_meta_tag%>
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>

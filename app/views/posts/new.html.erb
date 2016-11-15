@@ -1,29 +1,4 @@
 <h1>New post</h1>
 
 
-    <%= @post.errors.full_messages.join(", ")%>
-<%= form_for  @post do |f| %>
-
-  <div>
-
-    <%=f.label :title %>
-    <%=f.text_field :title %>
-  </div>
-  <div>
-    <%=f.label :body %>
-    <%=f.text_area :body %>
-  </div>
-
-  <div>
-    <%=f.label :category %>
-    <%= f.collection_select :category_id, Category.all, :id, :title%>
-  </div>
-
-  <div>
-    <%= f.collection_check_boxes(
-    :tag_ids, Tag.all, :id, :name
-    ) %>
-  </div>
-
-  <%= f.submit %>
-<% end %>
+  <%= render 'form', {btn_label: 'Create Post'} %>

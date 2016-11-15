@@ -1,0 +1,12 @@
+<div id="error_explanation">
+  <%= @comment.errors.full_messages.join(', ')%>
+</div>
+<div class="col-xs-12">
+  <%= form_for [@post, @comment], remote: true do |f| %>
+    <div class="form-group">
+      <% f.label :body%>
+      <%= f.text_area :body%>
+    </div><br>
+    <%= f.submit class: 'btn btn-default'%>
+  <% end %>
+</div><br><br><br><br>
